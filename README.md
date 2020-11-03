@@ -7,7 +7,7 @@ Serial Communication using C language ( RS-232, RS-485, USB,...,)
 it is basic code for serial communication, when only one device is connected.   
 The compiler should use **gcc**.
 ```
-gcc main.c -o main
+gcc -o main main.c
 ```
 You may have to enter command if program doesn't work even though it is connected to the device.   
 ```
