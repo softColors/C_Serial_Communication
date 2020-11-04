@@ -149,7 +149,7 @@ void main(void)
     for(i = 0; i < rx_len; i++)
     {
         ctmp = Pop_Queue(rx_buf);
-        printf(" %x",ctmp);
+        printf(" %d",ctmp);
     }
 
         
