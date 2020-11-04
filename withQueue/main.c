@@ -39,11 +39,11 @@ int SendPacket(int com_fd, char* send_packet, int packet_len)
 //-----------------------------------------------------------------------------
 // Function descripts : Read Packet (Serial)
 //-----------------------------------------------------------------------------
-int ReadPacket(int com_fd, char *rx_buf)
+int ReadPacket(int com_fd, Queue *rx_buf)
 {        
     int rx_num;
     int i,j;
-    unsigned char temp_buf[MAX_RX_BUF_SIZE]; // Buffer        
+    char temp_buf[MAX_RX_BUF_SIZE]; // Buffer        
     memset( &temp_buf, 0, sizeof(temp_buf) );
 
     // Read Data
@@ -53,7 +53,7 @@ int ReadPacket(int com_fd, char *rx_buf)
     // if Notihing Recived return FAIL
     if(rx_num < 1)   return C_FAIL ;
 
-    for(i=0; i < rx_num; i++) rx_buf[i] = temp_buf[i];
+    for(i=0; i < rx_num; i++) Push_Queue(rx_buf ,temp_buf[i]);
     return rx_num;
 
 }
@@ -105,9 +105,10 @@ int Finalize(int comfd)
 
 void main(void)
 {
-    int  i,tmp;
+    int  i,itmp;
     int  com_fd;
-    char rx_buf[MAX_RX_BUF_SIZE] = {0,};
+    Queue rx_buf[MAX_RX_BUF_SIZE] = {0,};
+    char ctmp;
     int  rx_len;
 
     //---------------------Config--------------------
@@ -134,8 +135,8 @@ void main(void)
     }
 
     // Send Packet
-    tmp = SendPacket(com_fd,send_packet,send_packet_len);
-    if(tmp ==C_SUCCESS) printf("Send Packet Success..\n");
+    itmp = SendPacket(com_fd,send_packet,send_packet_len);
+    if(itmp ==C_SUCCESS) printf("Send Packet Success..\n");
 
     // wait 1sec
     sleep(5);
@@ -145,11 +146,16 @@ void main(void)
     
     //Output Recived data
     printf("Rx Data :");
-    for(i = 0; i < rx_len; i++) 
-        printf(" %x",rx_buf[i]);
+    for(i = 0; i < rx_len; i++)
+    {
+        ctmp = Pop_Queue(rx_buf);
+        printf(" %x",ctmp);
+    }
+
+        
     printf("\n");
 
     // Colse serial port
-    tmp = Finalize(com_fd);
-    if(tmp ==C_SUCCESS ) printf("Serial Port Close Success..\n");
+    itmp = Finalize(com_fd);
+    if(itmp ==C_SUCCESS ) printf("Serial Port Close Success..\n");
 }

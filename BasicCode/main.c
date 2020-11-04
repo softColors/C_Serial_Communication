@@ -36,7 +36,7 @@ int ReadPacket(int com_fd, char *rx_buf)
 {        
     int rx_num;
     int i,j;
-    unsigned char temp_buf[MAX_RX_BUF_SIZE]; // Buffer        
+    char temp_buf[MAX_RX_BUF_SIZE]; // Buffer        
     memset( &temp_buf, 0, sizeof(temp_buf) );
 
     // Read Data

@@ -13,11 +13,22 @@
 
 
 CC = gcc
+CFLAGS=-o -c
+OBJS=main.o Queue.o
+TARGET=withQueue.out
+
+all: $(TARGET)
+
+clean:		
+	rm *.o   
+	rm $(TARGET)  
+
+$(TARGET): $(OBJS)
+	$(CC) $(TARGET) $(OBJS)
 
 
+main.o: main.c 
+Queue.o: Queue.c
 
-main :
-	gcc -c -o main.o main.c
 
-Queue : Queue.c
-	gcc -c -o Queue.o Queue.c
+ 
