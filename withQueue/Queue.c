@@ -50,7 +50,7 @@ int Push_Queue(Queue *q, element data) {
 	// check if the queue stack is full
     if (is_full(q))		return -1;
 	
-	q->rear =(q->rear + 1) % (QUEUE_MAX_SIZE);	
+	q->rear =(q->rear + 1) % (MAX_QUEUE_SIZE);	
 	q->data[q->rear] = data;	
 	return 1;
 }
@@ -64,7 +64,7 @@ element Pop_Queue(Queue *q) {
  	// check if the queue stack is empty
 	if (is_empty(q))   return -1;
 	
-	q->front = (q->front + 1) % (QUEUE_MAX_SIZE);
+	q->front = (q->front + 1) % (MAX_QUEUE_SIZE);
 	return q->data[q->front];
 }
 
@@ -81,7 +81,7 @@ bool is_empty(Queue *q) {
 // Function descripts : check Queue Full
 //-----------------------------------------------------------------------------
 bool is_full(Queue *q) {
-	if (((q->rear + 1) % QUEUE_MAX_SIZE) == q->front) return 1;
+	if (((q->rear + 1) % MAX_QUEUE_SIZE) == q->front) return 1;
 	else return 0;
 }
 
@@ -102,7 +102,7 @@ void Queue_Print(Queue q)
 		return;
 	}
 	do {
-		i = (i + 1) % QUEUE_MAX_SIZE;
+		i = (i + 1) % MAX_QUEUE_SIZE;
         printf("|[%2d] %3d |",i, q.data[i]);
 		if (i == q.rear) 
         {

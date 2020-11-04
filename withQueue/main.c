@@ -102,13 +102,31 @@ int Finalize(int comfd)
     }
 }
 
+//-----------------------------------------------------------------------------
+// Function descripts : print Recived pakcet
+//-----------------------------------------------------------------------------
+int Print_RecivePacket(Queue *rx_buf,int rx_len)
+{   
+    char ctmp;
+    int  i;
+
+    printf("Rx Data :");
+    for(i = 0; i < rx_len; i++)
+    {
+        ctmp = Pop_Queue(rx_buf);
+        printf("[%d] =  %d",i,ctmp);
+    }
+    printf("\n");
+}
+
+
 
 void main(void)
 {
     int  i,itmp;
     int  com_fd;
-    Queue rx_buf[MAX_RX_BUF_SIZE] = {0,};
-    char ctmp;
+
+    Queue rx_buf;
     int  rx_len;
 
     //---------------------Config--------------------
@@ -119,12 +137,15 @@ void main(void)
     char  send_packet[MAX_TX_BUF_SIZE] = {0x01,0x02,0x03};
     int   send_packet_len = 3;
 
+    // if you want changing rx_buf size 
+    // you can config {MAX_QUEUE_SIZE} in Queue.h
+    // Default rxbuf size : 128
     //================================================
 
     // Open serial Port
     com_fd = OpenPortSerialPort(port_name);
     
-    if(com_fd < 0 )
+    if(com_fd < 0 ) 
     {
         printf("Serial Port Open Error..\n");
         return ;
@@ -134,26 +155,23 @@ void main(void)
         printf("Serial Port Open Success..\n");
     }
 
-    // Send Packet
-    itmp = SendPacket(com_fd,send_packet,send_packet_len);
-    if(itmp ==C_SUCCESS) printf("Send Packet Success..\n");
-
-    // wait 1sec
-    sleep(5);
-
-    // Read Pakcet 
-    rx_len = ReadPacket(com_fd,rx_buf);
-    
-    //Output Recived data
-    printf("Rx Data :");
-    for(i = 0; i < rx_len; i++)
+    // replay 5 time for test
+    for(i = 0 ; i < 5 ; i++)
     {
-        ctmp = Pop_Queue(rx_buf);
-        printf(" %d",ctmp);
-    }
+        // Send Packet
+        itmp = SendPacket(com_fd,send_packet,send_packet_len);
+        if(itmp ==C_SUCCESS) printf("Send Packet Success..\n");
 
-        
-    printf("\n");
+        // wait 1sec
+        sleep(5);
+
+        // Read Pakcet 
+        rx_len = ReadPacket(com_fd,&rx_buf);
+
+        //Output Recived data
+        Print_RecivePacket(&rx_buf,rx_len);
+    }
+      
 
     // Colse serial port
     itmp = Finalize(com_fd);

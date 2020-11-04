@@ -3,14 +3,14 @@
 
 
 
-#define QUEUE_MAX_SIZE 128
+#define MAX_QUEUE_SIZE 128
 
 typedef char element;
 
 typedef struct __circleQueue {
 	int rear;
 	int front;
-	element data[QUEUE_MAX_SIZE];
+	element data[MAX_QUEUE_SIZE];
 
 }Queue;
 
