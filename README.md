@@ -20,4 +20,16 @@ This method prevents system delay, but it also makes it difficult to find the be
 Therefore, the receive buffer must consist of a queue.
 
 
+```
+cmake CMakeLists.txt
+make
+```
+
+if you not want using cmake
+you can use this scripts
+```
+gcc -c -o Queue.o Queue.c
+gcc -c -o main.o main.c
+gcc -o withQueue main.o Queue.o
+```
 ## Multi Drop Mode code
