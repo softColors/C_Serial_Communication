@@ -1,8 +1,9 @@
 
 //-----------------------------------------------------------------------------
 // PROGRAMMER   : cucudas0127
-// REVISION     : 2020.11.03
-// DESCRIPTS    : Simple Serial Communication with Queue Function.
+// REVISION     : 2020.11.05
+// DESCRIPTS    : Simple Serial Communication
+// PREFIX       : SRL
 // Environment Setting
 // OS : ubuntu 18.04
 //-----------------------------------------------------------------------------
@@ -18,7 +19,7 @@
 //-----------------------------------------------------------------------------
 // Function descripts : Send Setting Packet to IR Sensor
 //-----------------------------------------------------------------------------
-int SendPacket(int com_fd, char* send_packet, int packet_len) 
+int SRL_SendPacket(int com_fd, char* send_packet, int packet_len) 
 {   
     int tmp;
 
@@ -39,7 +40,7 @@ int SendPacket(int com_fd, char* send_packet, int packet_len)
 //-----------------------------------------------------------------------------
 // Function descripts : Read Packet (Serial)
 //-----------------------------------------------------------------------------
-int ReadPacket(int com_fd, Queue *rx_buf)
+int SRL_ReadPacket(int com_fd, Queue *rx_buf)
 {        
     int rx_num;
     int i,j;
@@ -93,7 +94,7 @@ int OpenPortSerialPort(char* com_name)
 //-----------------------------------------------------------------------------
 // Function descripts : close the port
 //-----------------------------------------------------------------------------
-int Finalize(int comfd)
+int SRL_Finalize(int comfd)
 {   
     if (comfd > 0) 
     {
@@ -109,7 +110,7 @@ int Finalize(int comfd)
 //-----------------------------------------------------------------------------
 // Function descripts : print Recived pakcet
 //-----------------------------------------------------------------------------
-int Print_RecivePacket(Queue *rx_buf,int rx_len)
+int SRL_Print_RecivePacket(Queue *rx_buf,int rx_len)
 {   
     char ctmp;
     int  i;
@@ -118,21 +119,18 @@ int Print_RecivePacket(Queue *rx_buf,int rx_len)
     for(i = 0; i < rx_len; i++)
     {
         ctmp = Pop_Queue(rx_buf);
-        printf("|[%2d] =  %3d|",i,ctmp);
+        printf("[%d] =  %d",i,ctmp);
     }
     printf("\n");
 }
 
 
-
-void main(void)
-{
-    int  i,itmp;
-    int  com_fd;
-
-    Queue rx_buf;
-    int  rx_len;
-
+//-----------------------------------------------------------------------------
+// Function descripts : print Recived pakcet
+//-----------------------------------------------------------------------------
+int SRL_Init(void)
+{   
+    /*
     //---------------------Config--------------------
     // Config Serial Port
     char* port_name = "/dev/ttyS3";
@@ -145,6 +143,40 @@ void main(void)
     // you can config {MAX_RX_BUF_SIZE} in header.h
     // Default rxbuf size : 128
     //================================================
+    */
+
+
+
+
+    // Open serial Port
+    com_fd = SRL_OpenPortSerialPort(port_name);
+    
+    if(com_fd < 0 ) 
+    {
+        printf("Serial Port Open Error..\n");
+        return C_FAIL;
+    }
+    else
+    {
+        printf("Serial Port Open Success..\n");
+        return com_fd;
+    }
+}
+
+
+
+
+//-----------------------------------------------------------------------------
+// Function descripts : Serial System Task Manager
+//-----------------------------------------------------------------------------
+void SRL_TaskManager(void)
+{
+    int  i,itmp;
+    int  com_fd;
+
+    Queue rx_buf;
+    int  rx_len;
+
 
     // Open serial Port
     com_fd = OpenPortSerialPort(port_name);
@@ -152,25 +184,19 @@ void main(void)
     if(com_fd < 0 )   return ;
     else              printf("Serial Port Open Success..\n");
 
-    // replay 5 time for test
-    for(i = 0 ; i < 5 ; i++)
-    {
-        // Send Packet
-        itmp = SendPacket(com_fd,send_packet,send_packet_len);
-        if(itmp ==C_SUCCESS) printf("Send Packet Success..\n");
 
-        // wait 1sec
-        sleep(5);
+    // Send Packet
+    itmp = SRL_SendPacket(com_fd,send_packet,send_packet_len);
+    if(itmp ==C_SUCCESS) printf("Send Packet Success..\n");
 
-        // Read Pakcet 
-        rx_len = ReadPacket(com_fd,&rx_buf);
+    // Read Pakcet 
+    rx_len = SRL_ReadPacket(com_fd,&rx_buf);
 
-        //Output Recived data
-        if(rx_len > 0) Print_RecivePacket(&rx_buf,rx_len);
-    }
-      
+    //Output Recived data
+    if(rx_len > 0) SRL_Print_RecivePacket(&rx_buf,rx_len);
+    
 
     // Colse serial port
-    itmp = Finalize(com_fd);
+    itmp = SRL_Finalize(com_fd);
     if(itmp ==C_SUCCESS ) printf("Serial Port Close Success..\n");
 }

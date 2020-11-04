@@ -9,15 +9,16 @@
 
 # if you want using make command
 # you have to install cmake
-# sudo apt install cmake 
+# sudo apt install make 
+
 
 CMAKE_MINIMUM_REQUIRED ( VERSION 2.8 )
-PROJECT("Serial Communication with Queue")
-MESSAGE ( ${CMAKE_PROJECT_NAME} )
+PROJECT("Serial Communication with Socket")
 
 SET(  FILES 
       main.c 
       Queue.c 
+      Serial.c
     )
 
-ADD_EXECUTABLE( withQueue.out ${FILES})
+ADD_EXECUTABLE( withSocket.out ${FILES})
