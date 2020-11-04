@@ -13,4 +13,4 @@
 
 
 
-ADD_EXECUTABLE( app.out main.c Queue.c )
+ADD_EXECUTABLE( withQueue.out main.c Queue.c )

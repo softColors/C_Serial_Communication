@@ -1,3 +1,0 @@
-/home/daeun/Desktop/git_C_Serial_Communication/withQueue/CMakeFiles/rebuild_cache.dir
-/home/daeun/Desktop/git_C_Serial_Communication/withQueue/CMakeFiles/app.out.dir
-/home/daeun/Desktop/git_C_Serial_Communication/withQueue/CMakeFiles/edit_cache.dir

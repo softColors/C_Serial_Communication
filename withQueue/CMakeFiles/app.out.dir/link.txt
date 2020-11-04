@@ -1,1 +1,0 @@
-/usr/bin/cc   -rdynamic CMakeFiles/app.out.dir/main.c.o CMakeFiles/app.out.dir/Queue.c.o  -o app.out 
