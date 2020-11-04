@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/daeun/Desktop/git_C_Serial_Communication/withQueue/Queue.c
+header.h
+/home/daeun/Desktop/git_C_Serial_Communication/withQueue/header.h
+
+/home/daeun/Desktop/git_C_Serial_Communication/withQueue/Queue.h
+
+/home/daeun/Desktop/git_C_Serial_Communication/withQueue/header.h
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+termios.h
+-
+unistd.h
+-
+fcntl.h
+-
+stdbool.h
+-
+Queue.h
+/home/daeun/Desktop/git_C_Serial_Communication/withQueue/Queue.h
+
+/home/daeun/Desktop/git_C_Serial_Communication/withQueue/main.c
+header.h
+/home/daeun/Desktop/git_C_Serial_Communication/withQueue/header.h
+
