@@ -4,7 +4,7 @@
 Serial Communication using C language ( RS-232, RS-485, USB,...,)
 
 ## Basic code
-it is basic code for serial communication, when only one device is connected.   
+It is a basic code for serial communication, when only one device is connected.   
 The compiler should use **gcc**.
 ```
 gcc -o BasicCode.out main.c
@@ -34,8 +34,8 @@ cmake CMakeLists.txt
 make
 ```
 
-if you not want using cmake
-you can use this scripts
+if you don't want to use cmake,
+you can use this script
 ```
 gcc -c -o Queue.o Queue.c
 gcc -c -o main.o main.c
