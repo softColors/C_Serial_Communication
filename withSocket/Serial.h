@@ -31,5 +31,5 @@
 #define MAX_TX_BUF_SIZE  128
 
 
-int SRL_Init(void)
+int SRL_Init(char *port_name);
 

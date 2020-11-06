@@ -14,7 +14,7 @@ Excute file is
 ./BasicCode.out
 ```
 
-You may have to enter command if program doesn't work even though it is connected to the device.   
+You may have to enter command if your program doesn't work even though it is connected to the device.   
 ```
 chmod 777 {Enter your serial dev location like '/dev/ttyS1'}
 ```

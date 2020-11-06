@@ -11,8 +11,18 @@
 
 #include "header.h"
 
+
+#define MAX_NUM_PORTNAME    20
 // Global variables (STATIC)
 //-----------------------------------------------------------------------------
+
+typedef struct serial_Info
+{
+    char portname[MAX_NUM_PORTNAME];
+    int comfd;
+}Serial;
+
+Serial Srl;
 //=============================================================================
 
 
@@ -128,7 +138,7 @@ int SRL_Print_RecivePacket(Queue *rx_buf,int rx_len)
 //-----------------------------------------------------------------------------
 // Function descripts : print Recived pakcet
 //-----------------------------------------------------------------------------
-int SRL_Init(void)
+int SRL_Init(char *port_name)
 {   
     /*
     //---------------------Config--------------------
@@ -145,22 +155,8 @@ int SRL_Init(void)
     //================================================
     */
 
-
-
-
-    // Open serial Port
-    com_fd = SRL_OpenPortSerialPort(port_name);
+    strcpy(Srl.portname,port_name);
     
-    if(com_fd < 0 ) 
-    {
-        printf("Serial Port Open Error..\n");
-        return C_FAIL;
-    }
-    else
-    {
-        printf("Serial Port Open Success..\n");
-        return com_fd;
-    }
 }
 
 

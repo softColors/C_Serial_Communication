@@ -28,6 +28,8 @@ void main(void)
     char  send_packet[MAX_TX_BUF_SIZE] = {0x01,0x02,0x03};
     int   send_packet_len = 3;
 
+
+    SRL_Init(port_name);
     // if you want changing rx_buf size 
     // you can config {MAX_RX_BUF_SIZE} in header.h
     // Default rxbuf size : 128
