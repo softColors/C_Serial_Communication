@@ -5,14 +5,7 @@
 // Environment ----------------------------------------------------------------
 // OS : ubuntu 18.04
 //-----------------------------------------------------------------------------
-#include <arpa/inet.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <fcntl.h>         // O_WRONLY
-#include <unistd.h>        // write(), close()
+#include "SimpleClient.h"
 
 
 #define C_FAIL    -1
@@ -147,7 +140,7 @@ void  main(void)
     if(sock_fd == C_FAIL) { printf("Socket open Error!\n"); return;}
 
 
-    for(int i = 5; i> 0; i--)
+    for( int i = 5; i > 0; i-- )
     {
       // Data Send
       itmp = SendData(sock_fd, send_data, strlen(send_data));

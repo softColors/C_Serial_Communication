@@ -5,19 +5,14 @@
 // Environment ----------------------------------------------------------------
 // OS : ubuntu 18.04
 //-----------------------------------------------------------------------------
-#include <arpa/inet.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <fcntl.h>         // O_WRONLY
-#include <unistd.h>        // write(), close()
-#include <netinet/in.h>
 
+#include "SimpleServer.h"
 
 #define C_SUCCESS 0
 #define C_FAIL 1
+
+#define MAX_RX_BUF_SIZE 128
+
 
 struct sockaddr_in st_server;
    
@@ -131,7 +126,6 @@ int AcceptClient(int sock_fd)
 
 
 
-#define MAX_RX_BUF_SIZE 128
 
 void main(void)
 {
