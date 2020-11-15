@@ -16,6 +16,14 @@
 // Server's Host Address 
 struct sockaddr_in	    HostAddr;                   
 
+
+
+typedef struct ServerInfo
+{
+    char ip[20];
+    int  port;
+}server;
+ServerInfo server;
 //-----------------------------------------------------------------------------
 // DESCRIPTS  : Create & Open Socket 
 //-----------------------------------------------------------------------------
@@ -114,10 +122,32 @@ void RecivedData_Wait(int sock_fd, char *rx_buf, int rx_buf_size)
 void CloseSocket(int sock_fd)
 {
     if(sock_fd > 0 )              
-      close(sock_fd);
+        close(sock_fd);
 }
 
 
+//-----------------------------------------------------------------------------
+// DESCRIPTS  :Init Socket
+//-----------------------------------------------------------------------------
+# define MIN_IP_ADDR_LEN 7
+int Init_Socket(char *ip_addr,int ip_len ,int ip_port)
+{
+    
+    //check config error
+    if(ip_addr==NULL) { printf("Sever ip config is empty!\n"); return C_FAIL;}
+    if(ip_len < MIN_IP_ADDR_LEN) { printf("Wrong server ip!\n"); return C_FAIL;}
+    if(ip_len < 0) { printf("Wrong server port!\n"); return C_FAIL;}
+    
+    //init gloval variable
+    strncpy(server.ip,ip_addr,ip_len);
+    server.port = ip_port;
+     
+    // Socket Open
+    sock_fd = OpenSocket_Client(server.ip,server.port);
+    if(sock_fd == C_FAIL) { printf("Socket open Error!\n"); return C_FAIL;}
+
+}
+    
 
 //-----------------------------------------------------------------------------
 // DESCRIPTS  :Management Socket
@@ -135,11 +165,7 @@ void  main(void)
     int   sock_fd, itmp;
     char  rx_buf[MAX_RX_BUF_SIZE] = {0,};
 
-    // Socket Open
-    sock_fd = OpenSocket_Client(server_addr,server_port);
-    if(sock_fd == C_FAIL) { printf("Socket open Error!\n"); return;}
-
-
+   
     for( int i = 5; i > 0; i-- )
     {
       // Data Send
