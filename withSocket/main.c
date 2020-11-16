@@ -20,6 +20,15 @@
 
 void main(void)
 {
+
+    //---------------------Config--------------------
+    // Enter Server IP 
+    char* server_addr = "127.0.0.1";
+    int   server_port = 8600;
+  
+    char* send_data="hello world!!";
+  
+    //================================================
     //---------------------Config--------------------
     // Config Serial Port
     char* port_name = "/dev/ttyS3";
@@ -35,8 +44,9 @@ void main(void)
     // Default rxbuf size : 128
     //================================================
 
-    SRL_
+    
 
 
-
+    // Socket Close
+    CloseSocket(sock_fd);
 }

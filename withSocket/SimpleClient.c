@@ -22,7 +22,9 @@ typedef struct ServerInfo
 {
     char ip[20];
     int  port;
+    int  sock_fd;
 }server;
+
 ServerInfo server;
 //-----------------------------------------------------------------------------
 // DESCRIPTS  : Create & Open Socket 
@@ -145,6 +147,10 @@ int Init_Socket(char *ip_addr,int ip_len ,int ip_port)
     // Socket Open
     sock_fd = OpenSocket_Client(server.ip,server.port);
     if(sock_fd == C_FAIL) { printf("Socket open Error!\n"); return C_FAIL;}
+    
+    //register socket file discripter
+    server.sock_fd = sock_fd;
+    return C_SUCCESS;
 
 }
     
@@ -152,36 +158,15 @@ int Init_Socket(char *ip_addr,int ip_len ,int ip_port)
 //-----------------------------------------------------------------------------
 // DESCRIPTS  :Management Socket
 //-----------------------------------------------------------------------------
-void  main(void)
+void  Socket_TaskManager(void)
 {
-    //---------------------Config--------------------
-    // Enter Server IP 
-    char* server_addr = "127.0.0.1";
-    int   server_port = 8600;
-  
-    char* send_data="hello world!!";
-  
-    //================================================
-    int   sock_fd, itmp;
+
     char  rx_buf[MAX_RX_BUF_SIZE] = {0,};
+    int   itmp;
 
-   
-    for( int i = 5; i > 0; i-- )
-    {
-      // Data Send
-      itmp = SendData(sock_fd, send_data, strlen(send_data));
-      if(itmp != C_FAIL){ printf("Send Data Success!\n"); }
-      else              { printf("Send Data Error!\n"); return;}
 
-      sleep(1);
-      // Read Data [Option : Wait/NoWait]
-      RecivedData_Wait(sock_fd, rx_buf,MAX_RX_BUF_SIZE);
-      //while(RecivedData_NoWait(sock_fd, rx_buf, MAX_RX_BUF_SIZE)==C_FAIL);
-      printf("Recived Data : %s\n",rx_buf);
-
-    }
-
-    // Socket Close
-    CloseSocket(sock_fd);
+    itmp = RecivedData_NoWait(server.sock_fd,rx_buf, MAX_RX_BUF_SIZE);
+    if(itmp ==C_SUCCESS)   printf("RxData : %s",rx_buf);
+    else                   return ;
 
 }

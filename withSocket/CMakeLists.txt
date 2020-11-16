@@ -19,6 +19,8 @@ SET(  FILES
       main.c 
       Queue.c 
       Serial.c
+      SimpleCient.c
     )
 
 ADD_EXECUTABLE( withSocket.out ${FILES})
+ADD_EXECUTABLE( TestServer.out SimpleServer.c)
