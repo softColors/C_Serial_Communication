@@ -6,6 +6,10 @@
 // OS : ubuntu 18.04
 //-----------------------------------------------------------------------------
 
+#ifndef _SERIAL_H_
+#define _SERIAL_H_
+
+
 //  Serial Communication baud rate
 /*
     choose your sensors(or board) baud rate and set Vlaue
@@ -32,4 +36,7 @@
 
 
 int SRL_Init(char *port_name);
+int SRL_SendPacket(int com_fd, char* send_packet, int packet_len);
+int SRL_Finalize(int comfd);
 
+#endif

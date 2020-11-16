@@ -6,6 +6,10 @@
 // OS : ubuntu 18.04
 //-----------------------------------------------------------------------------
 
+#ifndef _SIMPLECLIENT_H_
+#define _SIMPLECLIENT_H_
+
+
 #include <arpa/inet.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,3 +28,4 @@ void CloseSocket(int sock_fd);
 int  Init_Socket(char *ip_addr,int ip_len ,int ip_port); 
 void Socket_TaskManager(void);
 
+#endif

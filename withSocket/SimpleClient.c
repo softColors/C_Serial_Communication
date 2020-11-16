@@ -5,13 +5,9 @@
 // Environment ----------------------------------------------------------------
 // OS : ubuntu 18.04
 //-----------------------------------------------------------------------------
-#include "SimpleClient.h"
+#include "header.h"
 
 
-#define C_FAIL    -1
-#define C_SUCCESS 0
-
-#define MAX_RX_BUF_SIZE  128
 
 // Server's Host Address 
 struct sockaddr_in	    HostAddr;                   
@@ -23,9 +19,9 @@ typedef struct ServerInfo
     char ip[20];
     int  port;
     int  sock_fd;
-}server;
+}ServerData;
 
-ServerInfo server;
+ServerData server;
 //-----------------------------------------------------------------------------
 // DESCRIPTS  : Create & Open Socket 
 //-----------------------------------------------------------------------------
@@ -134,7 +130,8 @@ void CloseSocket(int sock_fd)
 # define MIN_IP_ADDR_LEN 7
 int Init_Socket(char *ip_addr,int ip_len ,int ip_port)
 {
-    
+    int itmp;
+
     //check config error
     if(ip_addr==NULL) { printf("Sever ip config is empty!\n"); return C_FAIL;}
     if(ip_len < MIN_IP_ADDR_LEN) { printf("Wrong server ip!\n"); return C_FAIL;}
@@ -145,11 +142,11 @@ int Init_Socket(char *ip_addr,int ip_len ,int ip_port)
     server.port = ip_port;
      
     // Socket Open
-    sock_fd = OpenSocket_Client(server.ip,server.port);
-    if(sock_fd == C_FAIL) { printf("Socket open Error!\n"); return C_FAIL;}
+    itmp = OpenSocket_Client(server.ip,server.port);
+    if(itmp == C_FAIL) { printf("Socket open Error!\n"); return C_FAIL;}
     
     //register socket file discripter
-    server.sock_fd = sock_fd;
+    server.sock_fd = itmp;
     return C_SUCCESS;
 
 }
@@ -161,11 +158,11 @@ int Init_Socket(char *ip_addr,int ip_len ,int ip_port)
 void  Socket_TaskManager(void)
 {
 
-    char  rx_buf[MAX_RX_BUF_SIZE] = {0,};
+    char  rx_buf[MAX_SOCKET_RX_LEN] = {0,};
     int   itmp;
 
 
-    itmp = RecivedData_NoWait(server.sock_fd,rx_buf, MAX_RX_BUF_SIZE);
+    itmp = RecivedData_NoWait(server.sock_fd,rx_buf, MAX_SOCKET_RX_LEN);
     if(itmp ==C_SUCCESS)   printf("RxData : %s",rx_buf);
     else                   return ;
 

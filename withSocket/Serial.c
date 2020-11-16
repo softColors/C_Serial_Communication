@@ -19,10 +19,10 @@
 typedef struct serial_Info
 {
     char portname[MAX_NUM_PORTNAME];
-    int comfd;
+    int com_fd;
 }Serial;
 
-Serial Srl;
+Serial serial;
 //=============================================================================
 
 
@@ -154,8 +154,15 @@ int SRL_Init(char *port_name)
     // Default rxbuf size : 128
     //================================================
     */
-
-    strcpy(Srl.portname,port_name);
+    int itmp;
+    strcpy(serial.portname,port_name);
+    // Open serial Port
+    itmp = OpenPortSerialPort(serial.portname);
+    
+    if(itmp < 0 )   return C_FAIL;
+    else            printf("Serial Port Open Success..\n");
+    serial.com_fd =itmp;
+   
     
 }
 
@@ -165,7 +172,7 @@ int SRL_Init(char *port_name)
 //-----------------------------------------------------------------------------
 // Function descripts : Serial System Task Manager
 //-----------------------------------------------------------------------------
-void SRL_TaskManager(void)
+int SRL_TaskManager(void)
 {
     int  i,itmp;
     int  com_fd;
@@ -174,25 +181,16 @@ void SRL_TaskManager(void)
     int  rx_len;
 
 
-    // Open serial Port
-    com_fd = OpenPortSerialPort(port_name);
-    
-    if(com_fd < 0 )   return ;
-    else              printf("Serial Port Open Success..\n");
-
-
-    // Send Packet
-    itmp = SRL_SendPacket(com_fd,send_packet,send_packet_len);
-    if(itmp ==C_SUCCESS) printf("Send Packet Success..\n");
-
     // Read Pakcet 
     rx_len = SRL_ReadPacket(com_fd,&rx_buf);
 
     //Output Recived data
     if(rx_len > 0) SRL_Print_RecivePacket(&rx_buf,rx_len);
-    
 
-    // Colse serial port
-    itmp = SRL_Finalize(com_fd);
-    if(itmp ==C_SUCCESS ) printf("Serial Port Close Success..\n");
+
+
+
+
+
+    
 }

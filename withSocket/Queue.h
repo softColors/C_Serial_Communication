@@ -3,7 +3,7 @@
 
 
 
-#define MAX_QUEUE_SIZE MAX_RX_BUF_SIZE
+#define MAX_QUEUE_SIZE MAX_SERIAL_Rx_LEN
 
 typedef char element;
 
