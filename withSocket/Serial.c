@@ -172,25 +172,17 @@ int SRL_Init(char *port_name)
 //-----------------------------------------------------------------------------
 // Function descripts : Serial System Task Manager
 //-----------------------------------------------------------------------------
-int SRL_TaskManager(void)
+int SRL_TaskManager(int  com_fd)
 {
+    static Queue rx_buf;
+
     int  i,itmp;
-    int  com_fd;
-
-    Queue rx_buf;
     int  rx_len;
-
 
     // Read Pakcet 
     rx_len = SRL_ReadPacket(com_fd,&rx_buf);
 
     //Output Recived data
     if(rx_len > 0) SRL_Print_RecivePacket(&rx_buf,rx_len);
-
-
-
-
-
-
     
 }

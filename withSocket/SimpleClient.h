@@ -26,6 +26,6 @@ int  RecivedData_NoWait(int sock_fd, char *rx_buf, int rx_buf_size);
 void RecivedData_Wait(int sock_fd, char *rx_buf, int rx_buf_size);
 void CloseSocket(int sock_fd);
 int  Init_Socket(char *ip_addr,int ip_len ,int ip_port); 
-void Socket_TaskManager(void);
+void  Socket_TaskManager(int sock_fd);
 
 #endif

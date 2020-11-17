@@ -38,5 +38,6 @@
 int SRL_Init(char *port_name);
 int SRL_SendPacket(int com_fd, char* send_packet, int packet_len);
 int SRL_Finalize(int comfd);
+int SRL_TaskManager(int  com_fd);
 
 #endif
