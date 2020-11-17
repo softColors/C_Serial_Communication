@@ -125,7 +125,7 @@ int SRL_Print_RecivePacket(Queue *rx_buf,int rx_len)
     char ctmp;
     int  i;
 
-    printf("Rx Data :");
+    printf("Serail Rx Data :");
     for(i = 0; i < rx_len; i++)
     {
         ctmp = Pop_Queue(rx_buf);

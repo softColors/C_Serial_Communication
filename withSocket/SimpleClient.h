@@ -20,12 +20,12 @@
 #include <unistd.h>        // write(), close()
 
 
-int  OpenSocket_Client(char *ip_addr,int ip_port);
-int  SendData(int sock_fd, char *tx_buf,int tx_len);
-int  RecivedData_NoWait(int sock_fd, char *rx_buf, int rx_buf_size);
-void RecivedData_Wait(int sock_fd, char *rx_buf, int rx_buf_size);
-void CloseSocket(int sock_fd);
-int  Init_Socket(char *ip_addr,int ip_len ,int ip_port); 
-void  Socket_TaskManager(int sock_fd);
+int  CLT_OpenSocket_Client(char *ip_addr,int ip_port);
+int  CLT_SendData(int sock_fd, char *tx_buf,int tx_len);
+int  CLT_RecivedData_NoWait(int sock_fd, char *rx_buf, int rx_buf_size);
+void CLT_RecivedData_Wait(int sock_fd, char *rx_buf, int rx_buf_size);
+void CLT_CloseSocket(int sock_fd);
+int  CLT_Init(char *ip_addr,int ip_len ,int ip_port); 
+void CLT_TaskManager(int sock_fd);
 
 #endif

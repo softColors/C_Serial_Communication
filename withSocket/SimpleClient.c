@@ -15,7 +15,7 @@ struct sockaddr_in	    HostAddr;
 //-----------------------------------------------------------------------------
 // DESCRIPTS  : Create & Open Socket 
 //-----------------------------------------------------------------------------
-int OpenSocket_Client(char *ip_addr,int ip_port)
+int CLT_OpenSocket_Client(char *ip_addr,int ip_port)
 {
     int socket_fd;
     int itmp;
@@ -48,7 +48,7 @@ int OpenSocket_Client(char *ip_addr,int ip_port)
 //-----------------------------------------------------------------------------
 // DESCRIPTS  :Send data to server 
 //-----------------------------------------------------------------------------
-int SendData(int sock_fd, char *tx_buf,int tx_len)
+int CLT_SendData(int sock_fd, char *tx_buf,int tx_len)
 {
     int itmp; 
 
@@ -64,7 +64,7 @@ int SendData(int sock_fd, char *tx_buf,int tx_len)
 //-----------------------------------------------------------------------------
 // DESCRIPTS  :Recive data, dodnt wait for data to be received
 //-----------------------------------------------------------------------------
-int RecivedData_NoWait(int sock_fd, char *rx_buf, int rx_buf_size)
+int CLT_RecivedData_NoWait(int sock_fd, char *rx_buf, int rx_buf_size)
 {
     int  	    nData;
     int	      st_socket_size = sizeof(struct sockaddr_in);
@@ -98,7 +98,7 @@ int RecivedData_NoWait(int sock_fd, char *rx_buf, int rx_buf_size)
 //-----------------------------------------------------------------------------
 // Function descripts : Read Buffer,wait for data to be recieved
 //-----------------------------------------------------------------------------
-void RecivedData_Wait(int sock_fd, char *rx_buf, int rx_buf_size)
+void CLT_RecivedData_Wait(int sock_fd, char *rx_buf, int rx_buf_size)
 {
     if(sock_fd > 0)   read(sock_fd, rx_buf, rx_buf_size);
     
@@ -107,7 +107,7 @@ void RecivedData_Wait(int sock_fd, char *rx_buf, int rx_buf_size)
 //-----------------------------------------------------------------------------
 // DESCRIPTS  :Close the Socket
 //-----------------------------------------------------------------------------
-void CloseSocket(int sock_fd)
+void CLT_CloseSocket(int sock_fd)
 {
     if(sock_fd > 0 )              
         close(sock_fd);
@@ -118,7 +118,7 @@ void CloseSocket(int sock_fd)
 // DESCRIPTS  :Init Socket
 //-----------------------------------------------------------------------------
 # define MIN_IP_ADDR_LEN 7
-int Init_Socket(char *ip_addr,int ip_len ,int ip_port)
+int CLT_Init(char *ip_addr,int ip_len ,int ip_port)
 {
     int itmp;
 
@@ -129,7 +129,7 @@ int Init_Socket(char *ip_addr,int ip_len ,int ip_port)
     
      
     // Socket Open
-    itmp = OpenSocket_Client(ip_addr,ip_port);
+    itmp = CLT_OpenSocket_Client(ip_addr,ip_port);
     if(itmp == C_FAIL) { printf("Socket open Error!\n"); return C_FAIL;}
     
     //register socket file discripter
@@ -141,14 +141,14 @@ int Init_Socket(char *ip_addr,int ip_len ,int ip_port)
 //-----------------------------------------------------------------------------
 // DESCRIPTS  :Management Socket
 //-----------------------------------------------------------------------------
-void  Socket_TaskManager(int sock_fd)
+void  CLT_TaskManager(int sock_fd)
 {
 
     char  rx_buf[MAX_SOCKET_RX_LEN] = {0,};
     int   itmp;
 
 
-    itmp = RecivedData_NoWait(sock_fd,rx_buf, MAX_SOCKET_RX_LEN);
+    itmp = CLT_RecivedData_NoWait(sock_fd,rx_buf, MAX_SOCKET_RX_LEN);
     if(itmp ==C_SUCCESS)   printf("RxData : %s",rx_buf);
     else                   return ;
 

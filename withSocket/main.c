@@ -31,8 +31,7 @@ void main(void)
   
     char send_data[MAX_SOCKET_TX_LEN];
   
-    //================================================
-    //---------------------Config--------------------
+    //-------------------
     // Config Serial Port
     char* port_name = "/dev/ttyS3";
 
@@ -50,35 +49,30 @@ void main(void)
 
 
     int com_fd,sock_fd ; 
-    
+    char serial_rx_buf[MAX_RX_BUF_SIZE];
+
     // Init System
-    sock_fd = Init_Socket(server_addr,strlen(server_addr),server_port);
+    sock_fd = CLT_Init(server_addr,strlen(server_addr),server_port);
     com_fd =SRL_Init(port_name);
 
     for(itmp = 0; itmp < 5 ; itmp ++)
     {
 
-
     // Send Packet
     itmp2 = SRL_SendPacket(com_fd,send_packet,send_packet_len);
     if(itmp2 ==C_SUCCESS) printf("Send Serial Packet Success..\n");
     
-    
-    
-    
     sleep(2);
+
+    //Recive Packet
     SRL_TaskManager(com_fd);
 
-
     }
-
-
-
 
     // Colse serial port
     itmp = SRL_Finalize(com_fd);
     //if(itmp ==C_SUCCESS ) printf("Serial Port Close Success..\n");
 
     // Socket Close
-    CloseSocket(sock_fd);
+    CLT_CloseSocket(sock_fd);
 }
