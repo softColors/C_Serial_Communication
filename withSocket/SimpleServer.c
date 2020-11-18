@@ -160,14 +160,15 @@ void main(void)
         //while(RecivedData_NoWait(client_fd, rx_buf, MAX_RX_BUF_SIZE)==C_FAIL);
         printf("[%d] Recived Data : %s\n",i,rx_buf);
         
-        sleep(1);
+        //sleep(1);
 
         // Send Data
         // Data Send
-        itmp = SendData(sock_fd, send_message, strlen(send_message));
-        if(itmp != C_FAIL){ printf("Send Data Success!\n"); }
-        else              { printf("Send Data Error!\n"); return;}
+        //itmp = SendData(sock_fd, send_message, strlen(send_message));
+        //if(itmp != C_FAIL){ printf("Send Data Success!\n"); }
+        //else              { printf("Send Data Error!\n"); return;}
     }
+    printf("Server Finalize\n");
 
     //close socket
     close(sock_fd);

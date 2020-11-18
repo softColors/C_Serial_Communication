@@ -47,6 +47,17 @@ void main(void)
     int itmp ; 
     int itmp2 ; 
 
+/*
+
+int  CLT_OpenSocket_Client(char *ip_addr,int ip_port);
+int  CLT_SendData(int sock_fd, char *tx_buf,int tx_len);
+int  CLT_RecivedData_NoWait(int sock_fd, char *rx_buf, int rx_buf_size);
+void CLT_RecivedData_Wait(int sock_fd, char *rx_buf, int rx_buf_size);
+void CLT_CloseSocket(int sock_fd);
+int  CLT_Init(char *ip_addr,int ip_len ,int ip_port); 
+void CLT_TaskManager(int sock_fd);
+
+*/
 
     int com_fd,sock_fd ; 
     char serial_rx_buf[MAX_RX_BUF_SIZE];
