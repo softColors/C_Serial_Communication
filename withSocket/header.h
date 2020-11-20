@@ -21,6 +21,8 @@
 #define MAX_SERIAL_Rx_LEN 128
 
 
+#define TRUE       1
+#define FALSE      0
 #define C_FAIL    -1
 #define C_SUCCESS  1
 

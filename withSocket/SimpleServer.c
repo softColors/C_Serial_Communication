@@ -36,9 +36,11 @@ int SendData(int sock_fd, char *tx_buf,int tx_len)
 //-----------------------------------------------------------------------------
 // Function descripts : Read Buffer,wait for data to be recieved
 //-----------------------------------------------------------------------------
-void RecivedData_Wait(int sock_fd, char *rx_buf, int rx_buf_size)
+int RecivedData_Wait(int sock_fd, char *rx_buf, int rx_buf_size)
 {
-    if(sock_fd > 0)   read(sock_fd, rx_buf, rx_buf_size);
+    int rx_len = 0;
+    if(sock_fd > 0)   rx_len = read(sock_fd, rx_buf, rx_buf_size);
+    return rx_len;
     
 }
 
@@ -140,7 +142,7 @@ void main(void)
     int sock_fd;
     int itmp;
     int client_fd;
-
+    int rx_len;
     // Open Socket
     sock_fd = OpenSocket_Server(st_server, server_port);
     if(sock_fd < 0 ) { printf("Server Open Error...\n");return; } 
@@ -153,12 +155,17 @@ void main(void)
     if( client_fd == C_FAIL) {printf("Server accept Error...\n"); return;}
     else                     {printf("Connection success...\n");}
 
-    for(int i = 5; i> 0; i--)
+    for(int i = 0; i< 5; i++)
     {
         // Read Data [Option : Wait/NoWait]
-        RecivedData_Wait(client_fd, rx_buf,MAX_RX_BUF_SIZE);
+        rx_len = RecivedData_Wait(client_fd, rx_buf,MAX_RX_BUF_SIZE);
         //while(RecivedData_NoWait(client_fd, rx_buf, MAX_RX_BUF_SIZE)==C_FAIL);
-        printf("[%d] Recived Data : %s\n",i,rx_buf);
+        printf("[%d] Recived Data :",i);
+        for(int j = 0; j <rx_len; j++)
+        {
+            printf(" %x",rx_buf[j]);
+        }
+        printf("\n");
         
         //sleep(1);
 

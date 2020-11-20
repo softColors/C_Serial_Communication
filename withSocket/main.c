@@ -44,41 +44,38 @@ void main(void)
     // you can config {MAX_RX_BUF_SIZE} in header.h
     // Default rxbuf size : 128
     //================================================
-    int itmp ; 
-    int itmp2 ; 
-
-/*
-
-int  CLT_OpenSocket_Client(char *ip_addr,int ip_port);
-int  CLT_SendData(int sock_fd, char *tx_buf,int tx_len);
-int  CLT_RecivedData_NoWait(int sock_fd, char *rx_buf, int rx_buf_size);
-void CLT_RecivedData_Wait(int sock_fd, char *rx_buf, int rx_buf_size);
-void CLT_CloseSocket(int sock_fd);
-int  CLT_Init(char *ip_addr,int ip_len ,int ip_port); 
-void CLT_TaskManager(int sock_fd);
-
-*/
-
+    int itmp, check; 
     int com_fd,sock_fd ; 
     char serial_rx_buf[MAX_RX_BUF_SIZE];
 
     // Init System
     sock_fd = CLT_Init(server_addr,strlen(server_addr),server_port);
-    com_fd =SRL_Init(port_name);
+    com_fd  = SRL_Init(port_name);
 
-    for(itmp = 0; itmp < 5 ; itmp ++)
+    if(sock_fd !=C_FAIL && com_fd !=C_FAIL) 
     {
+        for(itmp = 0; itmp < 5 ; itmp ++)
+        {
+        // Send Packet to sensor
+        check = SRL_SendPacket(com_fd,send_packet,send_packet_len);
+        if(check ==C_SUCCESS) 
+            printf("Send Serial Packet Success..\n");
+        
+        //Recive Packet from sensor
+        check = SRL_TaskManager(com_fd, serial_rx_buf,MAX_RX_BUF_SIZE);
 
-    // Send Packet
-    itmp2 = SRL_SendPacket(com_fd,send_packet,send_packet_len);
-    if(itmp2 ==C_SUCCESS) printf("Send Serial Packet Success..\n");
-    
-    sleep(2);
+        // Send serial data to server
+        if(check == TRUE)
+            CLT_SendData(sock_fd, serial_rx_buf, strlen(serial_rx_buf));
 
-    //Recive Packet
-    SRL_TaskManager(com_fd);
+        //delay
+        sleep(2);
 
+        }
     }
+
+    
+
 
     // Colse serial port
     itmp = SRL_Finalize(com_fd);

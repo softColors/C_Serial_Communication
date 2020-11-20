@@ -120,18 +120,20 @@ int SRL_Finalize(int comfd)
 //-----------------------------------------------------------------------------
 // Function descripts : print Recived pakcet
 //-----------------------------------------------------------------------------
-int SRL_Print_RecivePacket(Queue *rx_buf,int rx_len)
+void SRL_Arrange_RxData(char *arry_buf,Queue *rx_buf,int rx_len)
 {   
     char ctmp;
     int  i;
 
-    printf("Serail Rx Data :");
+    //printf("Serail Rx Data :");
     for(i = 0; i < rx_len; i++)
     {
         ctmp = Pop_Queue(rx_buf);
-        printf("[%d] =  %d",i,ctmp);
+        //printf("[%d] =  %d",i,ctmp);
+        arry_buf[i]=ctmp;
+
     }
-    printf("\n");
+    //printf("\n");
 }
 
 
@@ -172,17 +174,28 @@ int SRL_Init(char *port_name)
 //-----------------------------------------------------------------------------
 // Function descripts : Serial System Task Manager
 //-----------------------------------------------------------------------------
-int SRL_TaskManager(int  com_fd)
+int SRL_TaskManager(int  com_fd, char* buf, int buf_size)
 {
-    static Queue rx_buf;
+    static Queue q_rx_buf;
 
+    char c_rx_buf;
     int  i,itmp;
     int  rx_len;
+    
+    //
 
     // Read Pakcet 
-    rx_len = SRL_ReadPacket(com_fd,&rx_buf);
+    rx_len = SRL_ReadPacket(com_fd,&q_rx_buf);
+
 
     //Output Recived data
-    if(rx_len > 0) SRL_Print_RecivePacket(&rx_buf,rx_len);
-    
+    if(rx_len > 0)
+    {
+        //Init buf
+        memset(buf, 0, buf_size);
+        SRL_Arrange_RxData(buf,&q_rx_buf,rx_len);
+        return TRUE;
+    } 
+    else return FALSE;
+
 }

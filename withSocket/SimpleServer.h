@@ -16,7 +16,7 @@
 #include <netinet/in.h>
 
 int SendData(int sock_fd, char *tx_buf,int tx_len);
-void RecivedData_Wait(int sock_fd, char *rx_buf, int rx_buf_size);
+int RecivedData_Wait(int sock_fd, char *rx_buf, int rx_buf_size);
 int RecivedData_NoWait(int sock_fd, char *rx_buf, int rx_buf_size);
 int OpenSocket_Server(struct sockaddr_in st_server, int ip_port);
 int AcceptClient(int sock_fd);
