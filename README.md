@@ -51,12 +51,28 @@ Excute command is
 
 The time will surely come have to send data to the server, when you play with the Sensors.   
 
-So I leave a basic code here.   
-
-![image](https://user-images.githubusercontent.com/39799206/99765269-06fcd180-2b42-11eb-9140-0377cbe5e758.png)
+This code performs the role of sending sensor data to the server.
 
 
-## withPack
+you can complie using cmake    
+
+```
+cmake CMakeLists.txt
+make
+```
+
+Then, you can see two excute file.
+
+1.  TestServer.out
+2.  withSocket.out
+
+withSocket.out is our main file.
+TestServer.out file is for test.
+
+Just open two terminals and run each file, when you want to test!
+
+Test Picture    
+
+![image](https://user-images.githubusercontent.com/39799206/99765605-bf2a7a00-2b42-11eb-8c1c-3c0c4f71b3fd.png)
 
 
-## MultiSenosorSystem
