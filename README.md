@@ -76,3 +76,6 @@ Test Picture
 ![image](https://user-images.githubusercontent.com/39799206/99765605-bf2a7a00-2b42-11eb-8c1c-3c0c4f71b3fd.png)
 
 
+## withThread
+
+Recived buffer consists of threads.
